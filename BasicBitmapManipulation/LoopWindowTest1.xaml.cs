@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BasicBitmapManipulation.Noises;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -51,13 +52,7 @@ namespace BasicBitmapManipulation
         {
             DrawingVisual dVisuals = new();
 
-            //noise image
-            int noiseWidth= 512;
-            int noiseHeight= 512;
-            var random = new Random();
-            var pixels = new byte[noiseWidth * noiseHeight * 4];
-            random.NextBytes(pixels);
-            BitmapSource bitmapSource = BitmapSource.Create(noiseWidth, noiseHeight, 96, 96, PixelFormats.Pbgra32, null, pixels, noiseWidth * 4);
+            BitmapSource bitmapSource = PerlinNoiseImage(512,512,32);
 
             using (DrawingContext dContext = dVisuals.RenderOpen())
             {
@@ -65,7 +60,7 @@ namespace BasicBitmapManipulation
                 dContext.DrawRectangle(ScreenBackground, null, new Rect(0, 0, screenWidth, screenHeight));
 
                 //draw noise image on top of background
-                dContext.DrawImage(bitmapSource, new Rect(0, 0, noiseWidth, noiseHeight));
+                dContext.DrawImage(bitmapSource, new Rect(0, 0, screenWidth, screenHeight));
 
 
                 // Example drawing - you can add your custom drawing logic here
@@ -73,6 +68,61 @@ namespace BasicBitmapManipulation
                 dContext.DrawEllipse(Brushes.Coral, new Pen(Brushes.DarkRed, 2), new System.Windows.Point(300, 300), 50, 50);
             }
             return dVisuals;
+        }
+
+        private static BitmapSource NoiseImage(int noiseWidth=256,int noiseHeight=256)
+        {
+            //noise image            
+            var random = new Random();
+            var pixels = new byte[noiseWidth * noiseHeight * 4];
+            random.NextBytes(pixels);
+            BitmapSource bitmapSource = BitmapSource.Create(noiseWidth, noiseHeight, 96, 96, PixelFormats.Pbgra32, null, pixels, noiseWidth * 4);
+            return bitmapSource;
+        }
+
+        public static BitmapSource UniformRandomNoiseImage(int noiseWidth = 256, int noiseHeight = 256, byte alpha = 255)
+        {
+            var random = new Random();
+            var pixels = new byte[noiseWidth * noiseHeight * 4];
+
+            for (int i = 0; i < pixels.Length; i += 4)
+            {
+                pixels[i] = (byte)random.Next(256);       // Blue
+                pixels[i + 1] = (byte)random.Next(256);   // Green
+                pixels[i + 2] = (byte)random.Next(256);   // Red
+                pixels[i + 3] = alpha;                    // Alpha
+            }
+
+            return BitmapSource.Create(noiseWidth, noiseHeight, 96, 96, PixelFormats.Pbgra32, null, pixels, noiseWidth * 4);
+        }
+
+        public static BitmapSource PerlinNoiseImage(int noiseWidth = 256, int noiseHeight = 256, byte alpha = 255)
+        {
+            var pixels = new byte[noiseWidth * noiseHeight * 4];
+            var perlinNoise = new PerlinNoise();
+
+            for (int y = 0; y < noiseHeight; y++)
+            {
+                for (int x = 0; x < noiseWidth; x++)
+                {
+                    // Generate Perlin noise value
+                    double noiseValue = perlinNoise.Noise(x / 100.0, y / 100.0);
+
+                    // Normalize noise value to 0-255 range
+                    byte grayValue = (byte)((noiseValue + 1) * 0.5 * 255);
+
+                    // Calculate index in pixel array
+                    int index = (y * noiseWidth + x) * 4;
+
+                    // Set RGB values to the same gray value for grayscale noise
+                    pixels[index] = grayValue;       // Blue
+                    pixels[index + 1] = grayValue;   // Green
+                    pixels[index + 2] = grayValue;   // Red
+                    pixels[index + 3] = alpha;       // Alpha
+                }
+            }
+
+            return BitmapSource.Create(noiseWidth, noiseHeight, 96, 96, PixelFormats.Pbgra32, null, pixels, noiseWidth * 4);
         }
 
         private void DispatcherTimer_Tick(object? sender, EventArgs e)

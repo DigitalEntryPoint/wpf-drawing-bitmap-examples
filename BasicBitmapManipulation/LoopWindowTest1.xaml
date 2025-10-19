@@ -10,6 +10,6 @@
     Height="450"
     mc:Ignorable="d">
     <Grid Background="LightBlue">
-        <Image x:Name="theScreen" />
+        <Image x:Name="theScreen" RenderOptions.BitmapScalingMode="NearestNeighbor" />
     </Grid>
 </Window>
