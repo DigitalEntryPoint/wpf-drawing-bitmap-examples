@@ -47,30 +47,32 @@ namespace BasicBitmapManipulation
         {
             DrawingVisual dVisuals = new();
 
-            BitmapSource bitmapSource = NoiseMethods.PlusSignNoiseImage(1024, 1024, 8);
+            BitmapSource bitmapSource = NoiseMethods.UniformRandomNoiseImage(512, 512, 16);
 
             using (DrawingContext dContext = dVisuals.RenderOpen())
             {
                 // Clear background
                 dContext.DrawRectangle(ScreenBackground, null, new Rect(0, 0, screenWidth, screenHeight));
-
-                //draw noise image on top of background
+                //draw noise image on top image
                 dContext.DrawImage(bitmapSource, new Rect(0, 0, screenWidth, screenHeight));
+                // Define a 1-pixel pen
+                Pen outlinePen = new Pen(Brushes.Black, 1);
 
+                // Example rectangle drawing with pen
+                dContext.DrawRectangle(null, outlinePen, new Rect(50, 50, 200, 200));
 
-                // Example drawing - you can add your custom drawing logic here
-                dContext.DrawRectangle(Brushes.Azure, null, new Rect(50, 50, 200, 200));
-                
-                dContext.DrawEllipse(Brushes.Coral, new Pen(Brushes.DarkRed, 2), new System.Windows.Point(300, 300), 50, 50);
+                //dContext.DrawEllipse(Brushes.Coral, new Pen(Brushes.DarkRed, 2), new System.Windows.Point(300, 300), 50, 50);
 
                 // Draw FPS counter
                 CommonCustomDrawing.DrawFpsCounter(dContext, currentFps, this);
+
+
             }
             return dVisuals;
         }
 
         #region Drawing Functions
-        
+
         #endregion
 
         private void DispatcherTimer_Tick(object? sender, EventArgs e)
