@@ -32,7 +32,7 @@ namespace BasicBitmapManipulation
         #region Configs
         private const int fps = 60;
         private const int screenWidth = 256;//480;
-        private const int screenHeight = 64;//360;
+        private const int screenHeight = 160;//360;
         #endregion
 
         public LoopWindowTest4()
@@ -62,14 +62,30 @@ namespace BasicBitmapManipulation
                 dContext.DrawRectangle(ScreenBackground, null, new Rect(0, 0, screenWidth, screenHeight));
                 //draw noise image on top image
                 dContext.DrawImage(bitmapSource, new Rect(0, 0, screenWidth, screenHeight));
-                
+
+                DrawMovineLine(dContext);
                 // Draw 3D cube
-                DrawCube(dContext);
+                //DrawCube(dContext);
 
                 // Draw FPS counter
                 CommonCustomDrawing.DrawFpsCounter(dContext, currentFps, this, screenWidth, screenHeight);
             }
             return dVisuals;
+        }
+
+        private static void DrawMovineLine(DrawingContext dContext)
+        {
+            int randomNum = GetRandomNumber(98);
+            
+            dContext.DrawLine(new Pen(Brushes.Blue, GetRandomNumber(3)), new Point(0, 0), new Point(randomNum, 100));
+            dContext.DrawLine(new Pen(Brushes.Blue, GetRandomNumber(2)), new Point(0, 0), new Point(randomNum, 100));
+            dContext.DrawLine(new Pen(Brushes.Blue, GetRandomNumber(1)), new Point(0, 0), new Point(randomNum, 100));
+            dContext.DrawLine(new Pen(Brushes.Blue, GetRandomNumber(1)), new Point(0, 0), new Point(randomNum, 100));
+        }
+
+        private static int GetRandomNumber(int value = 1)
+        {
+            return new Random().Next(value);
         }
 
         private void DrawCube(DrawingContext dContext)
@@ -205,7 +221,7 @@ namespace BasicBitmapManipulation
                 rotationAngleX += rotationSpeed * deltaTime;
                 rotationAngleY += rotationSpeed * deltaTime * 0.7;
                 rotationAngleZ += rotationSpeed * deltaTime * 0.5;
-                
+
                 if (rotationAngleX >= 360) rotationAngleX -= 360;
                 if (rotationAngleY >= 360) rotationAngleY -= 360;
                 if (rotationAngleZ >= 360) rotationAngleZ -= 360;
