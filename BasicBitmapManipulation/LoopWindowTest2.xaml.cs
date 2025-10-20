@@ -1,3 +1,4 @@
+using BasicBitmapManipulation.DrawCommon;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -58,48 +59,18 @@ namespace BasicBitmapManipulation
 
 
                 // Example drawing - you can add your custom drawing logic here
-                //dContext.DrawRectangle(Brushes.Azure, null, new Rect(50, 50, 200, 200));
-                //dContext.DrawRectangle(Brushes.Azure, null, RectiPecti());
+                dContext.DrawRectangle(Brushes.Azure, null, new Rect(50, 50, 200, 200));
+                
                 dContext.DrawEllipse(Brushes.Coral, new Pen(Brushes.DarkRed, 2), new System.Windows.Point(300, 300), 50, 50);
 
                 // Draw FPS counter
-                DrawFpsCounter(dContext);
+                CommonCustomDrawing.DrawFpsCounter(dContext, currentFps, this);
             }
             return dVisuals;
         }
 
-        private void DrawFpsCounter(DrawingContext dContext)
-        {
-            string fpsText = $"FPS: {currentFps:F1}";
-
-            FormattedText formattedText = new FormattedText(
-                fpsText,
-                System.Globalization.CultureInfo.CurrentCulture,
-                FlowDirection.LeftToRight,
-                new Typeface("Arial"),
-                20,
-                Brushes.White,
-                VisualTreeHelper.GetDpi(this).PixelsPerDip);
-
-            // Draw a semi-transparent background for better readability
-            Rect textBounds = new Rect(5, 5, formattedText.Width + 10, formattedText.Height + 6);
-            dContext.DrawRectangle(new SolidColorBrush(System.Windows.Media.Color.FromArgb(180, 0, 0, 0)), null, textBounds);
-
-            // Draw the text
-            dContext.DrawText(formattedText, new System.Windows.Point(10, 8));
-        }
-
         #region Drawing Functions
-        private Rect RectiPecti()
-        {
-            var random = new Random();
-            var x = random.Next(0, screenWidth);
-            var y = random.Next(0, screenHeight);
-            var width = random.Next(0, screenWidth - x);
-            var height = random.Next(0, screenHeight - y);
-            var recti = new Rect(x, y, width, height);
-            return recti;
-        }
+        
         #endregion
 
         private void DispatcherTimer_Tick(object? sender, EventArgs e)
