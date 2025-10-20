@@ -22,10 +22,14 @@ namespace BasicBitmapManipulation
         private Queue<double> fpsHistory = new Queue<double>();
         private const int fpsHistorySize = 30; // Average over 30 frames
 
+        // Rotation tracking
+        private double rotationAngle = 0; // Current rotation angle in degrees
+        private double rotationSpeed = 45; // Rotation speed in degrees per second (adjustable)
+
         #region Configs
         private const int fps = 60;
-        private const int screenWidth = 512;
-        private const int screenHeight = 512;
+        private const int screenWidth = 480;
+        private const int screenHeight = 256;
         #endregion
 
         public LoopWindowTest2()
@@ -47,7 +51,7 @@ namespace BasicBitmapManipulation
         {
             DrawingVisual dVisuals = new();
 
-            BitmapSource bitmapSource = NoiseMethods.UniformRandomNoiseImage(512, 512, 16);
+            BitmapSource bitmapSource = NoiseMethods.UniformRandomNoiseImage(480, 256, 16);
 
             using (DrawingContext dContext = dVisuals.RenderOpen())
             {
@@ -55,11 +59,22 @@ namespace BasicBitmapManipulation
                 dContext.DrawRectangle(ScreenBackground, null, new Rect(0, 0, screenWidth, screenHeight));
                 //draw noise image on top image
                 dContext.DrawImage(bitmapSource, new Rect(0, 0, screenWidth, screenHeight));
+                
                 // Define a 1-pixel pen
                 Pen outlinePen = new Pen(Brushes.Black, 1);
 
-                // Example rectangle drawing with pen
-                dContext.DrawRectangle(null, outlinePen, new Rect(50, 50, 200, 200));
+                // Define rectangle properties
+                Rect rectangle = new Rect(50, 50, 200, 200);
+                Point rectangleCenter = new Point(rectangle.X + rectangle.Width / 2, rectangle.Y + rectangle.Height / 2);
+
+                // Apply rotation transformation around rectangle center
+                dContext.PushTransform(new RotateTransform(rotationAngle, rectangleCenter.X, rectangleCenter.Y));
+                
+                // Draw the rotating rectangle
+                dContext.DrawRectangle(null, outlinePen, rectangle);
+                
+                // Remove the transformation
+                dContext.Pop();
 
                 //dContext.DrawEllipse(Brushes.Coral, new Pen(Brushes.DarkRed, 2), new System.Windows.Point(300, 300), 50, 50);
 
@@ -95,6 +110,15 @@ namespace BasicBitmapManipulation
 
                 // Calculate average FPS
                 currentFps = fpsHistory.Average();
+
+                // Update rotation angle based on speed and delta time
+                rotationAngle += rotationSpeed * deltaTime;
+                
+                // Keep angle in 0-360 range (optional, prevents overflow)
+                if (rotationAngle >= 360)
+                {
+                    rotationAngle -= 360;
+                }
             }
 
             // Create the visual scene
