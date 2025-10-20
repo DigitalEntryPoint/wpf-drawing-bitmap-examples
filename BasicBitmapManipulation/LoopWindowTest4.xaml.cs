@@ -31,8 +31,8 @@ namespace BasicBitmapManipulation
 
         #region Configs
         private const int fps = 60;
-        private const int screenWidth = 256;//480;
-        private const int screenHeight = 160;//360;
+        private const int screenWidth = 480;//480;
+        private const int screenHeight = 320;//360;
         #endregion
 
         public LoopWindowTest4()
@@ -64,6 +64,8 @@ namespace BasicBitmapManipulation
                 dContext.DrawImage(bitmapSource, new Rect(0, 0, screenWidth, screenHeight));
 
                 DrawMovineLine(dContext);
+
+                DrawPivotRect(dContext);
                 // Draw 3D cube
                 //DrawCube(dContext);
 
@@ -75,13 +77,66 @@ namespace BasicBitmapManipulation
 
         private static void DrawMovineLine(DrawingContext dContext)
         {
-            int randomNum = GetRandomNumber(98);
-            
-            dContext.DrawLine(new Pen(Brushes.Blue, GetRandomNumber(3)), new Point(0, 0), new Point(randomNum, 100));
-            dContext.DrawLine(new Pen(Brushes.Blue, GetRandomNumber(2)), new Point(0, 0), new Point(randomNum, 100));
-            dContext.DrawLine(new Pen(Brushes.Blue, GetRandomNumber(1)), new Point(0, 0), new Point(randomNum, 100));
-            dContext.DrawLine(new Pen(Brushes.Blue, GetRandomNumber(1)), new Point(0, 0), new Point(randomNum, 100));
+            int randomNum = GetRandomNumber(5);
+
+            dContext.DrawLine(new Pen(Brushes.Blue, GetRandomNumber(2)), new Point(100, 10), new Point(50, 50));
+            dContext.DrawLine(new Pen(Brushes.Red, GetRandomNumber(2)), new Point(50, 50), new Point(50, 100));
+            dContext.DrawLine(new Pen(Brushes.Green, GetRandomNumber(2)), new Point(100, 130), new Point(50, 100));
+            dContext.DrawLine(new Pen(Brushes.Violet, GetRandomNumber(2)), new Point(100, 130), new Point(150, 100));
+            dContext.DrawLine(new Pen(Brushes.Aquamarine, GetRandomNumber(2)), new Point(150, 100), new Point(150, 50));
+            dContext.DrawLine(new Pen(Brushes.Violet, GetRandomNumber(2)), new Point(150, 50), new Point(100, 10));
+
+            dContext.DrawEllipse(Brushes.Green, null, new Point(100, 10), 3, 3);
+
+            dContext.DrawEllipse(Brushes.Pink, null, new Point(50, 50), 3, 3);
+            dContext.DrawEllipse(Brushes.Blue, null, new Point(50, 100), 3, 3);
+
+            dContext.DrawEllipse(Brushes.Red, null, new Point(100, 130), 3, 3);
+
+            dContext.DrawEllipse(Brushes.Purple, null, new Point(150, 100), 3, 3);
+            dContext.DrawEllipse(Brushes.Aqua, null, new Point(150, 50), 3, 3);
         }
+
+        private static void DrawPivotRect(DrawingContext dContext)
+        {
+
+            //int randomNum = GetRandomNumber(5);
+            var pivot = new Point(180, 100);
+            var rh = 60;
+            var rw = 80;
+
+            var dh = rh / 2;
+            var dw = rw / 2;
+
+            var px = pivot.X;
+            var py = pivot.Y;
+
+            var upy = py + dh;
+            var downy = py - dh;
+            var leftx = px - dw;
+            var rightx= px + dw;
+
+            //pivot
+            dContext.DrawEllipse(Brushes.BlueViolet, null, pivot, 3, 3);
+
+            //var p1 = new Point(px - dw, py - dh);
+            //var p2 = new Point(px - dw, py + dh);
+            //var p3 = new Point(px + dw, py - dh);
+            //var p4 = new Point(px + dw, py + dh);
+
+            var p1 = new Point(leftx, upy );
+            var p2 = new Point(leftx, downy);
+            var p3 = new Point(rightx, downy);
+            var p4 = new Point(rightx, upy);
+
+            dContext.DrawLine(new Pen(Brushes.DarkBlue, 1), p1, p2);
+            dContext.DrawLine(new Pen(Brushes.DarkViolet, 1), p2, p3);
+            dContext.DrawLine(new Pen(Brushes.DarkTurquoise, 1), p3, p4);
+            dContext.DrawLine(new Pen(Brushes.MediumVioletRed,1), p4, p1);
+
+        }
+
+
 
         private static int GetRandomNumber(int value = 1)
         {
