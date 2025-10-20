@@ -39,4 +39,12 @@ public partial class MainWindow : Window
         loopWindowTest1.Owner = this;
         loopWindowTest1.Show();
     }
+
+    private void LoopWindowTest2_Click(object sender, RoutedEventArgs e)
+    {
+        //new loop window test 2
+        LoopWindowTest2 loopWindowTest2 = new LoopWindowTest2();
+        loopWindowTest2.Owner = this;
+        loopWindowTest2.Show();
+    }
 }

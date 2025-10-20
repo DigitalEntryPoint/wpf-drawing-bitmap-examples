@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -6,9 +6,9 @@ using System.Windows.Threading;
 namespace BasicBitmapManipulation
 {
     /// <summary>
-    /// Interaction logic for LoopWindowTest1.xaml
+    /// Interaction logic for LoopWindowTest2.xaml
     /// </summary>
-    public partial class LoopWindowTest1 : Window
+    public partial class LoopWindowTest2 : Window
     {
         public DrawingVisual? DVisuals { get; set; }
         public DrawingContext? DContext { get; set; }
@@ -27,7 +27,7 @@ namespace BasicBitmapManipulation
         private const int screenHeight = 512;
         #endregion
 
-        public LoopWindowTest1()
+        public LoopWindowTest2()
         {
             InitializeComponent();
 
@@ -136,3 +136,4 @@ namespace BasicBitmapManipulation
         }
     }
 }
+

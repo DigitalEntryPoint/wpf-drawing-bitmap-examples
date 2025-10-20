@@ -21,6 +21,10 @@
                     Margin="2"
                     Click="LoopWindowTest1_Click"
                     Content="Loop Window Test 1" />
+                <Button
+                    Margin="2"
+                    Click="LoopWindowTest2_Click"
+                    Content="Loop Window Test 2" />
             </ToolBarPanel>
         </ToolBar>
     </Grid>
