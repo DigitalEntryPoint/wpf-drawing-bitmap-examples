@@ -111,10 +111,10 @@ namespace BasicBitmapManipulation
             var px = pivot.X;
             var py = pivot.Y;
 
-            var upy = py + dh;
-            var downy = py - dh;
-            var leftx = px - dw;
-            var rightx= px + dw;
+            var topy = py - dh;      // Top edge (Y decreases upward)
+            var bottomy = py + dh;   // Bottom edge (Y increases downward)
+            var leftx = px - dw;     // Left edge
+            var rightx = px + dw;    // Right edge
 
             //pivot
             dContext.DrawEllipse(Brushes.BlueViolet, null, pivot, 3, 3);
@@ -124,10 +124,10 @@ namespace BasicBitmapManipulation
             //var p3 = new Point(px + dw, py - dh);
             //var p4 = new Point(px + dw, py + dh);
 
-            var p1 = new Point(leftx, upy );
-            var p2 = new Point(leftx, downy);
-            var p3 = new Point(rightx, downy);
-            var p4 = new Point(rightx, upy);
+            var p1 = new Point(leftx, topy);      // Top-left
+            var p2 = new Point(leftx, bottomy);   // Bottom-left
+            var p3 = new Point(rightx, bottomy);  // Bottom-right
+            var p4 = new Point(rightx, topy);     // Top-right
 
             dContext.DrawLine(new Pen(Brushes.DarkBlue, 1), p1, p2);
             dContext.DrawLine(new Pen(Brushes.DarkViolet, 1), p2, p3);
