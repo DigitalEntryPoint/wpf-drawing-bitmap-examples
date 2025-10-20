@@ -31,6 +31,7 @@ public partial class MainWindow : Window
                 "LoopWindowTest1" => new LoopWindowTest1(),
                 "LoopWindowTest2" => new LoopWindowTest2(),
                 "LoopWindowTest3" => new LoopWindowTest3(),
+                "LoopWindowTest4" => new LoopWindowTest4(),
                 _ => null
             };
 

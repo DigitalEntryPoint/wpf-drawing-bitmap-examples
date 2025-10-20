@@ -19,16 +19,20 @@
                     Tag="KimiPaint" />
                 <Button
                     Margin="2"
-                    Content="Loop Window Test 1"
+                    Content="Animated Noise"
                     Tag="LoopWindowTest1" />
                 <Button
                     Margin="2"
-                    Content="Loop Window Test 2"
+                    Content="Rotation"
                     Tag="LoopWindowTest2" />
                 <Button
                     Margin="2"
-                    Content="Loop Window Test 3"
+                    Content="Cube Rotation"
                     Tag="LoopWindowTest3" />
+                <Button
+                    Margin="2"
+                    Content="Drawing Lines"
+                    Tag="LoopWindowTest4" />
             </ToolBarPanel>
         </ToolBar>
     </Grid>
