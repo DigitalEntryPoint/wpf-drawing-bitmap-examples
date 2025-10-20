@@ -11,20 +11,24 @@
     mc:Ignorable="d">
     <Grid>
         <ToolBar VerticalAlignment="Top">
-            <ToolBarPanel Orientation="Horizontal">
+            <ToolBarPanel ButtonBase.Click="BaseButton_Click" Orientation="Horizontal">
                 <!--  add tool bar items here  -->
                 <Button
                     Margin="2"
-                    Click="LoadImage_Click"
-                    Content="Kimi Paint" />
+                    Content="Kimi Paint"
+                    Tag="KimiPaint" />
                 <Button
                     Margin="2"
-                    Click="LoopWindowTest1_Click"
-                    Content="Loop Window Test 1" />
+                    Content="Loop Window Test 1"
+                    Tag="LoopWindowTest1" />
                 <Button
                     Margin="2"
-                    Click="LoopWindowTest2_Click"
-                    Content="Loop Window Test 2" />
+                    Content="Loop Window Test 2"
+                    Tag="LoopWindowTest2" />
+                <Button
+                    Margin="2"
+                    Content="Loop Window Test 3"
+                    Tag="LoopWindowTest3" />
             </ToolBarPanel>
         </ToolBar>
     </Grid>

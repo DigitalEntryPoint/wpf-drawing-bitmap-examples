@@ -64,7 +64,7 @@ namespace BasicBitmapManipulation
                 dContext.DrawEllipse(Brushes.Coral, new Pen(Brushes.DarkRed, 2), new System.Windows.Point(300, 300), 50, 50);
 
                 // Draw FPS counter
-                CommonCustomDrawing.DrawFpsCounter(dContext, currentFps, this);
+                CommonCustomDrawing.DrawFpsCounter(dContext, currentFps, this, screenWidth, screenHeight);
             }
             return dVisuals;
         }

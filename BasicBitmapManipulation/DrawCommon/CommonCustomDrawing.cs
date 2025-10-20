@@ -14,8 +14,14 @@ namespace BasicBitmapManipulation.DrawCommon
         /// <param name="dContext">The DrawingContext to draw on</param>
         /// <param name="currentFps">The current FPS value to display</param>
         /// <param name="window">The window instance for DPI calculation</param>
-        public static void DrawFpsCounter(DrawingContext dContext, double currentFps, Window window)
+        /// <param name="screenWidth">Width of the screen/canvas</param>
+        /// <param name="screenHeight">Height of the screen/canvas</param>
+        public static void DrawFpsCounter(DrawingContext dContext, double currentFps, Window window, double screenWidth, double screenHeight)
         {
+            // Calculate responsive font size (approximately 5% of the smaller screen dimension)
+            double fontSize = Math.Min(screenWidth, screenHeight) * 0.05;
+            fontSize = Math.Max(12, Math.Min(fontSize, 32)); // Clamp between 12 and 32
+            
             string fpsText = $"FPS: {currentFps:F1}";
 
             FormattedText formattedText = new FormattedText(
@@ -23,16 +29,20 @@ namespace BasicBitmapManipulation.DrawCommon
                 System.Globalization.CultureInfo.CurrentCulture,
                 FlowDirection.LeftToRight,
                 new Typeface("Arial"),
-                20,
+                fontSize,
                 Brushes.White,
                 VisualTreeHelper.GetDpi(window).PixelsPerDip);
 
+            // Calculate responsive padding
+            double padding = fontSize * 0.3;
+            double margin = fontSize * 0.25;
+
             // Draw a semi-transparent background for better readability
-            Rect textBounds = new Rect(5, 5, formattedText.Width + 10, formattedText.Height + 6);
+            Rect textBounds = new Rect(margin, margin, formattedText.Width + padding * 2, formattedText.Height + padding);
             dContext.DrawRectangle(new SolidColorBrush(Color.FromArgb(180, 0, 0, 0)), null, textBounds);
 
             // Draw the text
-            dContext.DrawText(formattedText, new Point(10, 8));
+            dContext.DrawText(formattedText, new Point(margin + padding, margin + padding * 0.5));
         }
     }
 }
