@@ -31,8 +31,8 @@ namespace BasicBitmapManipulation
 
         #region Configs
         private const int fps = 60;
-        private const int screenWidth = 480;//480;
-        private const int screenHeight = 320;//360;
+        private const int screenWidth = 360;//480;
+        private const int screenHeight = 256;//360;
         #endregion
 
         public LoopWindowTest4()

@@ -9,29 +9,29 @@
     Width="800"
     Height="450"
     mc:Ignorable="d">
-    <Grid>
+    <Grid Style="{DynamicResource realBg}">
         <ToolBar VerticalAlignment="Top">
             <ToolBarPanel ButtonBase.Click="BaseButton_Click" Orientation="Horizontal">
                 <!--  add tool bar items here  -->
                 <Button
-                    Margin="2"
                     Content="Kimi Paint"
+                    Style="{DynamicResource foundryKatana}"
                     Tag="KimiPaint" />
                 <Button
-                    Margin="2"
                     Content="Animated Noise"
+                    Style="{DynamicResource foundryKatana}"
                     Tag="LoopWindowTest1" />
                 <Button
-                    Margin="2"
                     Content="Rotation"
+                    Style="{DynamicResource foundryKatana}"
                     Tag="LoopWindowTest2" />
                 <Button
-                    Margin="2"
                     Content="Cube Rotation"
+                    Style="{DynamicResource foundryKatana}"
                     Tag="LoopWindowTest3" />
                 <Button
-                    Margin="2"
                     Content="Drawing Lines"
+                    Style="{DynamicResource foundryKatana}"
                     Tag="LoopWindowTest4" />
             </ToolBarPanel>
         </ToolBar>
