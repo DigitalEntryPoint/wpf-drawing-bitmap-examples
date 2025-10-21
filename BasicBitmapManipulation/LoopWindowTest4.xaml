@@ -10,7 +10,17 @@
     Height="450"
     mc:Ignorable="d">
     <Grid Background="LightBlue">
-        <Image x:Name="theScreen" RenderOptions.BitmapScalingMode="NearestNeighbor"  />
+        <Image x:Name="theScreen" RenderOptions.BitmapScalingMode="NearestNeighbor" />
+        <StackPanel
+            MinWidth="128"
+            Margin="4"
+            HorizontalAlignment="Left">
+            <Label Content="Parameters:" FontWeight="SemiBold" />
+            <Slider
+                x:Name="slider1"
+                Minimum="0.1"
+                TickPlacement="BottomRight" />
+        </StackPanel>
     </Grid>
 </Window>
 

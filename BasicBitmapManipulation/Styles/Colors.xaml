@@ -10,4 +10,16 @@
     <SolidColorBrush x:Key="Gray-500" Color="#262626" />
     <SolidColorBrush x:Key="Gray-200" Color="#b3b3b3" />
 
+    <!-- Katana Dark Theme Colors -->
+    <SolidColorBrush x:Key="Katana-Background" Color="#1e1e1e" />
+    <SolidColorBrush x:Key="Katana-Panel" Color="#2a2a2a" />
+    <SolidColorBrush x:Key="Katana-Hover" Color="#3a3a3a" />
+    <SolidColorBrush x:Key="Katana-Border" Color="#1a1a1a" />
+    <SolidColorBrush x:Key="Katana-Orange" Color="#cc7832" />
+    <SolidColorBrush x:Key="Katana-Pink" Color="#e95ca8" />
+    <SolidColorBrush x:Key="Katana-Text" Color="#cccccc" />
+    <SolidColorBrush x:Key="Katana-TextLight" Color="#e0e0e0" />
+    <SolidColorBrush x:Key="Katana-Selected" Color="#2d4f5e" />
+    <SolidColorBrush x:Key="Katana-Highlight" Color="#3d5a6a" />
+
 </ResourceDictionary>

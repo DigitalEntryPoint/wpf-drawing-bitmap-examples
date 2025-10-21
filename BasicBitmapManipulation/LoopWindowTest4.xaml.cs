@@ -17,6 +17,9 @@ namespace BasicBitmapManipulation
         public static Brush ScreenBackground { get; set; } = Brushes.Transparent;
         private RenderTargetBitmap? renderBitmap;
 
+        public double Angle { get; set; } = 0;
+        public double LineThickness { get; set; } = 2;
+
         // FPS tracking
         private DateTime lastFrameTime = DateTime.Now;
         private double currentFps = 0;
@@ -39,6 +42,8 @@ namespace BasicBitmapManipulation
         {
             InitializeComponent();
 
+            
+
             // Initialize the render target bitmap
             renderBitmap = new RenderTargetBitmap(screenWidth, screenHeight, 96, 96, PixelFormats.Pbgra32);
             theScreen.Source = renderBitmap;
@@ -48,6 +53,14 @@ namespace BasicBitmapManipulation
             dispatcherTimer.Tick += DispatcherTimer_Tick;
             dispatcherTimer.Interval = TimeSpan.FromMilliseconds(1000 / fps); // Approximately 60 FPS
             dispatcherTimer.Start();
+
+
+            slider1.Value = LineThickness;
+
+            slider1.ValueChanged += (s, e) =>
+            {
+                LineThickness = slider1.Value;
+            };
         }
 
         public DrawingVisual GraphicScreen()
@@ -96,47 +109,6 @@ namespace BasicBitmapManipulation
             dContext.DrawEllipse(Brushes.Purple, null, new Point(150, 100), 3, 3);
             dContext.DrawEllipse(Brushes.Aqua, null, new Point(150, 50), 3, 3);
         }
-
-        private static void DrawPivotRect(DrawingContext dContext)
-        {
-
-            //int randomNum = GetRandomNumber(5);
-            var pivot = new Point(180, 100);
-            var rh = 60;
-            var rw = 80;
-
-            var dh = rh / 2;
-            var dw = rw / 2;
-
-            var px = pivot.X;
-            var py = pivot.Y;
-
-            var topy = py - dh;      // Top edge (Y decreases upward)
-            var bottomy = py + dh;   // Bottom edge (Y increases downward)
-            var leftx = px - dw;     // Left edge
-            var rightx = px + dw;    // Right edge
-
-            //pivot
-            dContext.DrawEllipse(Brushes.BlueViolet, null, pivot, 3, 3);
-
-            //var p1 = new Point(px - dw, py - dh);
-            //var p2 = new Point(px - dw, py + dh);
-            //var p3 = new Point(px + dw, py - dh);
-            //var p4 = new Point(px + dw, py + dh);
-
-            var p1 = new Point(leftx, topy);      // Top-left
-            var p2 = new Point(leftx, bottomy);   // Bottom-left
-            var p3 = new Point(rightx, bottomy);  // Bottom-right
-            var p4 = new Point(rightx, topy);     // Top-right
-
-            dContext.DrawLine(new Pen(Brushes.DarkBlue, 1), p1, p2);
-            dContext.DrawLine(new Pen(Brushes.DarkViolet, 1), p2, p3);
-            dContext.DrawLine(new Pen(Brushes.DarkTurquoise, 1), p3, p4);
-            dContext.DrawLine(new Pen(Brushes.MediumVioletRed,1), p4, p1);
-
-        }
-
-
 
         private static int GetRandomNumber(int value = 1)
         {
@@ -247,8 +219,47 @@ namespace BasicBitmapManipulation
             return new Point(centerX + x * perspective, centerY - y * perspective);
         }
 
-        #region Drawing Functions
 
+
+        #region Draw Helper Points
+        private void DrawPivotRect(DrawingContext dContext, double angle = 0)
+        {
+            var pivot = new Point(180, 100);
+            var rh = 60;
+            var rw = 80;
+
+            var dh = rh / 2;
+            var dw = rw / 2;
+
+            var px = pivot.X;
+            var py = pivot.Y;
+
+            var topy = py - dh;      // Top edge (Y decreases upward)
+            var bottomy = py + dh;   // Bottom edge (Y increases downward)
+            var leftx = px - dw;     // Left edge
+            var rightx = px + dw;    // Right edge
+
+            // Pivot
+            dContext.DrawEllipse(Brushes.BlueViolet, null, pivot, 3, 3);
+
+            var p1 = new Point(leftx, topy);      // Top-left
+            var p2 = new Point(leftx, bottomy);   // Bottom-left
+            var p3 = new Point(rightx, bottomy);  // Bottom-right
+            var p4 = new Point(rightx, topy);     // Top-right
+
+            dContext.DrawLine(new Pen(Brushes.DarkBlue, LineThickness), p1, p2);
+            dContext.DrawLine(new Pen(Brushes.DarkViolet, LineThickness), p2, p3);
+            dContext.DrawLine(new Pen(Brushes.DarkTurquoise, LineThickness), p3, p4);
+            dContext.DrawLine(new Pen(Brushes.MediumVioletRed, LineThickness), p4, p1);
+
+            // Draw helper points
+            DrawHelperPoints(dContext, leftx, topy);
+        }
+        private static void DrawHelperPoints(DrawingContext dContext, double x, double y)
+        {
+            //calculate helper points x and y
+            dContext.DrawEllipse(Brushes.Red, null, new Point(x, y), 2.5, 2.5);
+        }
         #endregion
 
         private void DispatcherTimer_Tick(object? sender, EventArgs e)
