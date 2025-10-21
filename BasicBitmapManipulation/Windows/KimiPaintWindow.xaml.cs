@@ -4,7 +4,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace BasicBitmapManipulation
+namespace BasicBitmapManipulation.Windows
 {
    
     public partial class KimiPaintWindow : Window

@@ -5,7 +5,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
-namespace BasicBitmapManipulation
+namespace BasicBitmapManipulation.Windows
 {
     /// <summary>
     /// Base window for rendering graphics with FPS tracking
