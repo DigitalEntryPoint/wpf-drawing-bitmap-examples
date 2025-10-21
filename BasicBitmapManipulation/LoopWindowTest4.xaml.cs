@@ -255,25 +255,33 @@ namespace BasicBitmapManipulation
             var p3 = new Point(rightx, bottomy);  // Bottom-right
             var p4 = new Point(rightx, topy);     // Top-right
 
-            dContext.DrawLine(new Pen(Brushes.DarkBlue, LineThickness), p1, p2);
-            dContext.DrawLine(new Pen(Brushes.DarkViolet, LineThickness), p2, p3);
-            dContext.DrawLine(new Pen(Brushes.DarkTurquoise, LineThickness), p3, p4);
-            dContext.DrawLine(new Pen(Brushes.MediumVioletRed, LineThickness), p4, p1);
+            var p1Rotated = RotatePointAroundPivot(p1, pivot, Angle);
+            var p2Rotated = RotatePointAroundPivot(p2, pivot, Angle);
+            var p3Rotated = RotatePointAroundPivot(p3, pivot, Angle);
+            var p4Rotated = RotatePointAroundPivot(p4, pivot, Angle);
+
+            dContext.DrawLine(new Pen(Brushes.DarkBlue, LineThickness), p1Rotated, p2Rotated);
+            dContext.DrawLine(new Pen(Brushes.DarkViolet, LineThickness), p2Rotated, p3Rotated);
+            dContext.DrawLine(new Pen(Brushes.DarkTurquoise, LineThickness), p3Rotated, p4Rotated);
+            dContext.DrawLine(new Pen(Brushes.MediumVioletRed, LineThickness), p4Rotated, p1Rotated);
 
             // Draw helper points
             DrawHelperPoints(dContext, leftx, topy, pivot);
+            DrawHelperPoints(dContext, leftx, bottomy, pivot);
+            DrawHelperPoints(dContext, rightx, topy, pivot);
+            DrawHelperPoints(dContext, rightx, bottomy, pivot);
         }
 
-        private void DrawHelperPoints(DrawingContext dContext, double x, double y, Point pivot)
+        private Point RotatePointAroundPivot(double x, double y, Point pivot, double angleInDegrees)
         {
             // Convert angle from degrees to radians
-            double angleInRadians = Angle * Math.PI / 180.0;
+            double angleInRadians = angleInDegrees * Math.PI / 180.0;
 
             // Translate point to origin (relative to pivot)
             double relX = x - pivot.X;
             double relY = y - pivot.Y;
 
-            // Apply rotation
+            // Apply rotation matrix
             double rotatedX = relX * Math.Cos(angleInRadians) - relY * Math.Sin(angleInRadians);
             double rotatedY = relX * Math.Sin(angleInRadians) + relY * Math.Cos(angleInRadians);
 
@@ -281,8 +289,18 @@ namespace BasicBitmapManipulation
             double finalX = rotatedX + pivot.X;
             double finalY = rotatedY + pivot.Y;
 
-            // Draw the rotated ellipse
-            dContext.DrawEllipse(Brushes.Red, null, new Point(finalX, finalY), 2.5, 2.5);
+            return new Point(finalX, finalY);
+        }
+
+        private Point RotatePointAroundPivot(Point point, Point pivot, double angleInDegrees)
+        {
+            return RotatePointAroundPivot(point.X, point.Y, pivot, angleInDegrees);
+        }
+
+        private void DrawHelperPoints(DrawingContext dContext, double x, double y, Point pivot)
+        {
+            Point rotatedPoint = RotatePointAroundPivot(x, y, pivot, Angle);
+            dContext.DrawEllipse(Brushes.Red, null, rotatedPoint, 2.5, 2.5);
         }
         #endregion
 
