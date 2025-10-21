@@ -41,9 +41,7 @@ namespace BasicBitmapManipulation
 
         public LoopWindowTest4()
         {
-            InitializeComponent();
-
-            
+            InitializeComponent();            
 
             // Initialize the render target bitmap
             renderBitmap = new RenderTargetBitmap(screenWidth, screenHeight, 96, 96, PixelFormats.Pbgra32);
