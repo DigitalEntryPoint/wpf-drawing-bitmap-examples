@@ -16,10 +16,17 @@
             Margin="4"
             HorizontalAlignment="Left">
             <Label Content="Parameters:" FontWeight="SemiBold" />
+            <Label Content="Line thickness:" />
             <Slider
                 x:Name="slider1"
                 Minimum="0.1"
                 TickPlacement="BottomRight" />
+            <Label Content="Angel:" />
+            <Slider
+                x:Name="slider2"
+                Maximum="360"
+                Minimum="0.1"
+                Value="0" />
         </StackPanel>
     </Grid>
 </Window>

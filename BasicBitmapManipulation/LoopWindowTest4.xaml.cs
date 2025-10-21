@@ -19,6 +19,7 @@ namespace BasicBitmapManipulation
 
         public double Angle { get; set; } = 0;
         public double LineThickness { get; set; } = 2;
+        
 
         // FPS tracking
         private DateTime lastFrameTime = DateTime.Now;
@@ -60,6 +61,13 @@ namespace BasicBitmapManipulation
             slider1.ValueChanged += (s, e) =>
             {
                 LineThickness = slider1.Value;
+            };
+
+            slider2.Value = Angle;
+
+            slider2.ValueChanged += (s, e) =>
+            {
+                Angle = slider2.Value;
             };
         }
 
@@ -253,12 +261,28 @@ namespace BasicBitmapManipulation
             dContext.DrawLine(new Pen(Brushes.MediumVioletRed, LineThickness), p4, p1);
 
             // Draw helper points
-            DrawHelperPoints(dContext, leftx, topy);
+            DrawHelperPoints(dContext, leftx, topy, pivot);
         }
-        private static void DrawHelperPoints(DrawingContext dContext, double x, double y)
+
+        private void DrawHelperPoints(DrawingContext dContext, double x, double y, Point pivot)
         {
-            //calculate helper points x and y
-            dContext.DrawEllipse(Brushes.Red, null, new Point(x, y), 2.5, 2.5);
+            // Convert angle from degrees to radians
+            double angleInRadians = Angle * Math.PI / 180.0;
+
+            // Translate point to origin (relative to pivot)
+            double relX = x - pivot.X;
+            double relY = y - pivot.Y;
+
+            // Apply rotation
+            double rotatedX = relX * Math.Cos(angleInRadians) - relY * Math.Sin(angleInRadians);
+            double rotatedY = relX * Math.Sin(angleInRadians) + relY * Math.Cos(angleInRadians);
+
+            // Translate back to original position
+            double finalX = rotatedX + pivot.X;
+            double finalY = rotatedY + pivot.Y;
+
+            // Draw the rotated ellipse
+            dContext.DrawEllipse(Brushes.Red, null, new Point(finalX, finalY), 2.5, 2.5);
         }
         #endregion
 
